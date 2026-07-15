@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LensAI · Universal Data Lens</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="layout">
+      <header>
+        <h1>LensAI</h1>
+        <p class="subtitle">Session-only AI + SQL data lens powered by PGlite</p>
+      </header>
+
+      <section class="panel">
+        <h2>1) Ingest sources</h2>
+        <input id="fileInput" type="file" multiple />
+        <button id="ingestBtn">Ingest Files</button>
+        <p id="ingestStatus">No files ingested yet.</p>
+      </section>
+
+      <section class="panel">
+        <h2>2) Query with AI + SQL</h2>
+        <label for="apiKey">Optional OpenAI API key (kept in session memory)</label>
+        <input id="apiKey" type="password" placeholder="sk-..." autocomplete="off" />
+        <label for="question">Ask a question</label>
+        <textarea id="question" rows="4" placeholder="What are the main open issues and which files mention them?"></textarea>
+        <button id="queryBtn">Run Query</button>
+        <pre id="sqlPlan">SQL plan: (none)</pre>
+      </section>
+
+      <section class="panel">
+        <h2>3) Results</h2>
+        <div id="results" class="results"></div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
