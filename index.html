@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LensAI · Universal Data Lens</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js" integrity="sha384-q6xAYXPALdJ2DZPg/PBw7V4e4L2OBR4+QRdK8u24Y3+Kv2LLgPWpC3xLJgXqR1H0" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <main class="layout">
+      <header>
+        <h1>LensAI</h1>
+        <p class="subtitle">Session-only AI + SQL data lens powered by PGlite</p>
+        <p class="privacy-notice">🔒 All processing happens in your browser. Nothing is sent unless you provide an API key.</p>
+      </header>
+
+      <section class="panel">
+        <h2>1) Ingest Sources</h2>
+        <div class="ingest-options">
+          <div class="ingest-row">
+            <input id="fileInput" type="file" multiple />
+            <button id="ingestBtn">Ingest Files</button>
+          </div>
+          <div class="ingest-row">
+            <input id="githubUrl" type="text" placeholder="GitHub repo URL (public): https://github.com/user/repo" />
+            <button id="ingestGithubBtn">Fetch from GitHub</button>
+          </div>
+        </div>
+        <div class="progress-container" id="progressContainer" style="display:none;">
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <p id="progressText">Processing...</p>
+        </div>
+        <p id="ingestStatus">No files ingested yet.</p>
+        <div id="statsPanel" class="stats-panel" style="display:none;">
+          <span id="statDocs">0 docs</span> · <span id="statChunks">0 chunks</span> · <span id="statEntities">0 entities</span> · <span id="statMemory">~0 KB</span>
+        </div>
+        <div class="config-row">
+          <label><input type="number" id="maxFileSize" value="5" min="1" max="50" /> MB max file size</label>
+          <label><input type="number" id="chunkSize" value="1000" min="100" max="5000" /> chars/chunk</label>
+          <label><input type="number" id="chunkOverlap" value="100" min="0" max="500" /> overlap</label>
+        </div>
+      </section>
+
+      <section class="panel" id="suggestionsPanel" style="display:none;">
+        <h2>Suggested Queries</h2>
+        <div id="suggestions" class="suggestions"></div>
+      </section>
+
+      <section class="panel">
+        <h2>2) Query with AI + SQL</h2>
+        <label for="apiKey">Optional OpenAI API key (kept in session memory)</label>
+        <input id="apiKey" type="password" placeholder="sk-..." autocomplete="off" />
+        <div class="tabs">
+          <button class="tab active" data-tab="nlQuery">Natural Language</button>
+          <button class="tab" data-tab="rawSql">Raw SQL</button>
+        </div>
+        <div id="nlQuery" class="tab-content active">
+          <label for="question">Ask a question</label>
+          <textarea id="question" rows="4" placeholder="What are the main open issues and which files mention them?"></textarea>
+          <button id="queryBtn">Run Query</button>
+        </div>
+        <div id="rawSql" class="tab-content">
+          <label for="rawSqlInput">Enter SQL (read-only queries only)</label>
+          <textarea id="rawSqlInput" rows="4" placeholder="SELECT source_path, type FROM documents LIMIT 10"></textarea>
+          <button id="rawSqlBtn">Execute SQL</button>
+        </div>
+        <details>
+          <summary>SQL Plan & Trace</summary>
+          <pre id="sqlPlan">SQL plan: (none)</pre>
+        </details>
+      </section>
+
+      <section class="panel">
+        <h2>3) Results</h2>
+        <div id="results" class="results"></div>
+      </section>
+
+      <section class="panel session-controls">
+        <h2>Session</h2>
+        <div class="button-row">
+          <button id="resetBtn">🔄 Reset Session</button>
+          <button id="exportBtn">📦 Export Results & Sources (JSON)</button>
+        </div>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
