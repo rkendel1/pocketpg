@@ -1,0 +1,20 @@
+{
+  "name": "lensai",
+  "version": "1.0.0",
+  "description": "Universal Data Lens with AI + PGlite - Session-only browser app for querying files",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build:userscript": "vite build --config vite.userscript.config.js"
+  },
+  "dependencies": {
+    "@electric-sql/pglite": "^0.2.17",
+    "pdfjs-dist": "^4.10.38"
+  },
+  "devDependencies": {
+    "vite": "^6.4.3"
+  },
+  "license": "MIT"
+}
